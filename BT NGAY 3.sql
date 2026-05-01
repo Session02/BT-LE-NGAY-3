@@ -39,3 +39,37 @@ CREATE TABLE bookings (
     
     FOREIGN KEY (showtime_id) REFERENCES showtimes(id)
 );
+
+-- Thêm 4 phim (có 1 phim 18+)
+INSERT INTO movies (title, duration_minutes, age_restriction) VALUES
+('Avengers: Secret Wars', 150, 13),
+('Inside Out 2', 100, 0),
+('The Conjuring 4', 120, 18), -- phim 18+
+('Dune: Part Two', 165, 13);
+
+-- Thêm 3 phòng (1 phòng bảo trì)
+INSERT INTO rooms (name, max_seats, status) VALUES
+('Room 1', 100, 'active'),
+('Room 2', 80, 'active'),
+('Room 3', 120, 'maintenance'); -- phòng bảo trì
+
+-- Thêm 5 lịch chiếu (KHÔNG dùng Room 3)
+INSERT INTO showtimes (movie_id, room_id, show_time, ticket_price) VALUES
+(1, 1, '2026-05-02 09:00:00', 75000),
+(2, 1, '2026-05-02 13:00:00', 70000),
+(3, 2, '2026-05-02 18:00:00', 90000), -- phim 18+
+(4, 2, '2026-05-02 21:00:00', 85000),
+(1, 1, '2026-05-03 10:00:00', 75000);
+
+-- Thêm 10 vé đặt (rải rác các lịch chiếu)
+INSERT INTO bookings (showtime_id, customer_name, phone) VALUES
+(1, 'Nguyen Van A', '0900000001'),
+(1, 'Tran Thi B', '0900000002'),
+(2, 'Le Van C', '0900000003'),
+(2, 'Pham Thi D', '0900000004'),
+(3, 'Hoang Van E', '0900000005'),
+(3, 'Vo Thi F', '0900000006'),
+(4, 'Dang Van G', '0900000007'),
+(4, 'Bui Thi H', '0900000008'),
+(5, 'Do Van I', '0900000009'),
+(5, 'Nguyen Thi K', '0900000010');
