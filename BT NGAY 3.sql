@@ -73,3 +73,34 @@ INSERT INTO bookings (showtime_id, customer_name, phone) VALUES
 (4, 'Bui Thi H', '0900000008'),
 (5, 'Do Van I', '0900000009'),
 (5, 'Nguyen Thi K', '0900000010');
+
+SET SQL_SAFE_UPDATES = 0;
+-- 1. Chuyển trạng thái phòng 1 sang bảo trì
+UPDATE rooms
+SET status = 'maintenance'
+WHERE id = 1;
+
+-- 2. Chuyển toàn bộ lịch chiếu từ phòng 1 sang phòng 2
+UPDATE showtimes
+SET room_id = 2
+WHERE room_id = 1;
+
+-- 3. Hủy toàn bộ vé của khách có số điện thoại 0987654321
+DELETE FROM bookings
+WHERE phone = '0987654321';
+
+-- 4. Gỡ bỏ phim có id = 3 (tránh lỗi FK bằng cách xóa theo thứ tự)
+
+-- Xóa booking liên quan đến các lịch chiếu của phim 3
+DELETE FROM bookings
+WHERE showtime_id IN (
+    SELECT id FROM showtimes WHERE movie_id = 3
+);
+
+-- Xóa các lịch chiếu của phim 3
+DELETE FROM showtimes
+WHERE movie_id = 3;
+
+-- Cuối cùng xóa phim
+DELETE FROM movies
+WHERE id = 3;
